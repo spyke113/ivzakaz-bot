@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 
 class OpenCartService
 {
@@ -26,14 +29,18 @@ class OpenCartService
             'json' => $order,
         ]);
 
-        return json_decode($response->getBody(), true);
+        return $this->parseResponse($response);
     }
 
     public function getOrderStatus(int $orderId): string
     {
         $response = $this->client->get("/orders/{$orderId}");
-        $data = json_decode($response->getBody(), true);
-
+        $data = $this->parseResponse($response);
         return $data['status'] ?? 'Ожидает обработки';
+    }
+
+    private function parseResponse(ResponseInterface $response): array
+    {
+        return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
 }

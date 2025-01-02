@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 if (!function_exists('app')) {
-    function app($abstract = null, array $parameters = [])
+    function app(string $abstract = null, array $parameters = []): mixed
     {
         if (is_null($abstract)) {
             return Container::getInstance();
@@ -12,14 +14,14 @@ if (!function_exists('app')) {
 }
 
 if (!function_exists('env')) {
-    function env($key, $default = null)
+    function env(string $key, mixed $default = null): mixed
     {
         return $_ENV[$key] ?? $default;
     }
 }
 
 if (!function_exists('config')) {
-    function config($key, $default = null)
+    function config(string $key, mixed $default = null): mixed
     {
         // Загрузка конфигурации из файлов
         $config = require __DIR__ . '/config/services.php';

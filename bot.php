@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__ . '/app/bootstrap.php';
 
 use SergiX44\Nutgram\Nutgram;
 use App\Commands\StartCommand;
